@@ -27,6 +27,16 @@ class LinkedList(object):
             head = head.next
         return size
 
+    @staticmethod
+    def build_from_list(array):
+        ll = LinkedList()
+        if not array:
+            return ll
+        ll.head = Node(array[0])
+        for i in range(1, len(array)):
+            ll.append(array[i])
+        return ll
+
     def append(self, val):
         node = Node(val)
         head = self.head
@@ -88,3 +98,5 @@ if __name__ == "__main__":
     ll.reverse()
     print(ll)
     assert ll.head.val == 5
+    ll = LinkedList.build_from_list([10, 20, 30, 40, 50])
+    print(ll)
