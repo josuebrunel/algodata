@@ -47,10 +47,15 @@ class LinkedList(object):
         prev.next = node
         node.next = head
 
-    def merge(ll: "LinkedList") -> None:
-        pass
-
-
+    def remove(self, val):
+        cur = self.head 
+        prev = None
+        while cur.next:
+            if cur.val == val:
+                break
+            prev = cur
+            cur = cur.next 
+        prev.next = cur.next
 
 if __name__ == "__main__":
     head = Node(1)
@@ -65,4 +70,6 @@ if __name__ == "__main__":
     ll.append(5)
     print(ll)
     ll.insert_at(4, 3)
+    print(ll)
+    ll.remove(4)
     print(ll)
