@@ -48,14 +48,26 @@ class LinkedList(object):
         node.next = head
 
     def remove(self, val):
-        cur = self.head 
+        cur = self.head
         prev = None
         while cur.next:
             if cur.val == val:
                 break
             prev = cur
-            cur = cur.next 
+            cur = cur.next
         prev.next = cur.next
+
+    def reverse(self):
+        cur = self.head
+        prev = None
+        while cur:
+            next_node = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_node
+
+        self.head = prev
+
 
 if __name__ == "__main__":
     head = Node(1)
@@ -73,3 +85,6 @@ if __name__ == "__main__":
     print(ll)
     ll.remove(4)
     print(ll)
+    ll.reverse()
+    print(ll)
+    assert ll.head.val == 5
