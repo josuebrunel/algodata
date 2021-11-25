@@ -1,0 +1,10 @@
+1. Understand logarithmique complexity
+2. Graph traversal ( DFS, BFS, Matrix, Cyclic )
+3. Binary search
+4. Sliding window technique ( 2 pointers manipulation )
+5. Recursion
+6. Inverting a binary tree and reversing a linked list
+7. Suffix Trees ( Trie )
+8. Heaps ( Binary Heaps, Max Heap, Min Heap )
+9. Dynamic programming
+10. Sorting algorithms ( Quick and Merge sort )
