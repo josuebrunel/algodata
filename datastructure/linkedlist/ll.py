@@ -37,6 +37,14 @@ class LinkedList(object):
             ll.append(array[i])
         return ll
 
+    def to_list(self):
+        res = []
+        cur = self.head
+        while cur:
+            res.append(cur.val)
+            cur = cur.next
+        return res
+
     def append(self, val):
         node = Node(val)
         head = self.head
@@ -100,3 +108,4 @@ if __name__ == "__main__":
     assert ll.head.val == 5
     ll = LinkedList.build_from_list([10, 20, 30, 40, 50])
     print(ll)
+    assert ll.to_list() == [10, 20, 30, 40, 50]
