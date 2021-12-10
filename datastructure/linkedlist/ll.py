@@ -1,111 +1,144 @@
-class Node(object):
+import unittest
 
-    def __init__(self, val, next=None):
+
+class Node:
+    def __init__(self, val, nxt=None):
         self.val = val
-        self.next = next
+        self.next = nxt
 
     def __repr__(self):
-        return f"{self.val} -> {self.next}"
+        return f"{self.val}->{self.next}"
 
 
-class LinkedList(object):
-
+class LinkedList:
     def __init__(self, head=None):
         self.head = head
 
     def __repr__(self):
         return f"{self.head}"
 
-    def __str__(self):
-        return self.__repr__()
-
     def __len__(self):
-        size = 0
-        head = self.head
-        while head:
-            size += 1
-            head = head.next
-        return size
+        node = self.head
+        counter = 0
+        while node:
+            counter += 1
+            node = node.next
+        return counter
 
     @staticmethod
-    def build_from_list(array):
-        ll = LinkedList()
+    def from_list(array):
         if not array:
-            return ll
-        ll.head = Node(array[0])
+            return LinkedList()
+        ll = LinkedList(Node(array[0]))
+        node = ll.head
         for i in range(1, len(array)):
-            ll.append(array[i])
+            node.next = Node(array[i])
+            node = node.next
         return ll
 
     def to_list(self):
-        res = []
-        cur = self.head
-        while cur:
-            res.append(cur.val)
-            cur = cur.next
-        return res
+        array = []
+        node = self.head
+        while node:
+            array.append(node.val)
+            node = node.next
+        return array
 
+    # O(1)
+    def prepend(self, val):
+        node = Node(val, self.head)
+        self.head = node
+
+    # O(n)
     def append(self, val):
-        node = Node(val)
-        head = self.head
-        while head.next:
-            head = head.next
-        head.next = node
+        node = self.head
+        while node.next:
+            node = node.next
+        node.next = Node(val)
 
+    # O(n)
     def insert_at(self, val, pos):
-        head = self.head
+        node = self.head
         prev = None
-        while head:
+        while node.next:
             if pos == 0:
                 break
-            prev = head
-            head = head.next
+            prev = node
+            node = node.next
             pos -= 1
-        node = Node(val)
-        prev.next = node
-        node.next = head
+        new_node = Node(val, node)
+        prev.next = new_node
 
+    # O(n)
     def remove(self, val):
-        cur = self.head
+        node = self.head
         prev = None
-        while cur.next:
-            if cur.val == val:
+        while node.next:
+            if node.val == val:
                 break
-            prev = cur
-            cur = cur.next
-        prev.next = cur.next
+            prev = node
+            node = node.next
+        prev.next = node.next
 
+    # O(n)
     def reverse(self):
-        cur = self.head
+        node = self.head
         prev = None
-        while cur:
-            next_node = cur.next
-            cur.next = prev
-            prev = cur
-            cur = next_node
-
+        while node:
+            next_node = node.next
+            node.next = prev
+            prev = node
+            node = next_node
         self.head = prev
 
 
+class TestLinkedList(unittest.TestCase):
+    def test_from_list(self):
+        print("Test from list")
+        ll = LinkedList.from_list([1, 2, 3, 4, 5])
+        print(ll)
+        self.assertEqual(len(ll) == 5, True)
+
+    def test_prepend(self):
+        print("Test prepend")
+        ll = LinkedList.from_list([1, 2, 3, 4, 5])
+        print(ll)
+        ll.prepend(0)
+        print(ll)
+        self.assertEqual(len(ll) == 6, True)
+
+    def test_append(self):
+        print("Test append")
+        ll = LinkedList.from_list([1, 2, 3, 4, 5])
+        print(ll)
+        ll.append(6)
+        print(ll)
+        self.assertEqual(len(ll) == 6, True)
+
+    def test_insert_at(self):
+        print("Test insert at")
+        ll = LinkedList.from_list([1, 2, 3, 5])
+        print(ll)
+        ll.insert_at(4, 3)
+        print(ll)
+        self.assertEqual(len(ll) == 5, True)
+
+    def test_remove(self):
+        print("Test remove")
+        ll = LinkedList.from_list([1, 2, 3, 4, 5])
+        print(ll)
+        ll.remove(4)
+        print(ll)
+        self.assertEqual(len(ll) == 4, True)
+
+    def test_reverse(self):
+        print("Test reverse")
+        ll = LinkedList.from_list([1, 2, 3, 4, 5])
+        print(ll)
+        ll.reverse()
+        print(ll)
+        self.assertEqual(ll.to_list() == [5, 4, 3, 2, 1], True)
+
+
 if __name__ == "__main__":
-    head = Node(1)
-    ll = LinkedList(head)
-    print(len(ll))
-    ll.append(2)
-    ll.append(3)
-    size = len(ll)
-    print(size)
-    assert size == 3
-    print(ll)
-    ll.append(5)
-    print(ll)
-    ll.insert_at(4, 3)
-    print(ll)
-    ll.remove(4)
-    print(ll)
-    ll.reverse()
-    print(ll)
-    assert ll.head.val == 5
-    ll = LinkedList.build_from_list([10, 20, 30, 40, 50])
-    print(ll)
-    assert ll.to_list() == [10, 20, 30, 40, 50]
+    unittest.main()
