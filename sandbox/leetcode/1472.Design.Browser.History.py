@@ -51,8 +51,32 @@ class BrowserHistory:
         return cur.val
 
 
+class BrowserHistoryStack:
+    def __init__(self, url):
+        self.index = 0
+        self.stack = [url]
+
+    def __repr__(self):
+        return f"{self.stack}"
+
+    def visit(self, url):
+        self.index += 1
+        self.stack = self.stack[: self.index]
+        self.stack.append(url)
+
+    def forward(self, steps):
+        cur_idx = min(self.index + steps, len(self.stack) - 1)
+        self.index = cur_idx
+        return self.stack[cur_idx]
+
+    def back(self, steps):
+        cur_idx = max(self.index - steps, 0)
+        self.index = cur_idx
+        return self.stack[cur_idx]
+
+
 class TestBrowserHistory(unittest.TestCase):
-    def test_history(self):
+    def test_history_linkedlist(self):
         bh = BrowserHistory("leetcode.com")
         for url in ("google.com", "facebook.com", "youtube.com"):
             bh.visit(url)
@@ -71,6 +95,26 @@ class TestBrowserHistory(unittest.TestCase):
         print(bh)
         self.assertEqual(bh.back(7), "leetcode.com")
         print(bh.head)
+
+    def test_history_stack(self):
+        bh = BrowserHistoryStack("leetcode.com")
+        for url in ("google.com", "facebook.com", "youtube.com"):
+            bh.visit(url)
+        print(bh)
+        self.assertEqual(bh.back(1), "facebook.com")
+        print(bh)
+        self.assertEqual(bh.back(1), "google.com")
+        print(bh)
+        self.assertEqual(bh.forward(1), "facebook.com")
+        print(bh)
+        bh.visit("linkedin.com")
+        print(bh)
+        self.assertEqual(bh.forward(2), "linkedin.com")
+        print(bh)
+        self.assertEqual(bh.back(2), "google.com")
+        print(bh)
+        self.assertEqual(bh.back(7), "leetcode.com")
+        print(bh)
 
 
 if __name__ == "__main__":
