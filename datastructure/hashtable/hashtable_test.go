@@ -29,10 +29,12 @@ func (b Bucket) String() string {
 }
 
 func (b *Bucket) insert(key string, val interface{}) {
-	if b.search(key) != nil {
+	node := b.search(key)
+	if node != nil {
+		node.val = val
 		return
 	}
-	node := &Node{key, val, b.head}
+	node = &Node{key, val, b.head}
 	b.head = node
 }
 
@@ -121,7 +123,7 @@ func (h *HashTable) remove(key string) {
 	return
 }
 
-func TestHelloWorld(t *testing.T) {
+func TestHashTable(t *testing.T) {
 	h := New(10)
 	h.put("name", "josh")
 	type Person struct {
@@ -145,6 +147,12 @@ func TestHelloWorld(t *testing.T) {
 	value = h.get("cat")
 	t.Logf("%s", h)
 	if value != nil {
+		t.Fatalf("Unexpected value returned (%v)", value)
+	}
+	// update value
+	h.put("tac", "tic")
+	value = h.get("tac")
+	if value != "tic" {
 		t.Fatalf("Unexpected value returned (%v)", value)
 	}
 }
