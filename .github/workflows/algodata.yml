@@ -23,7 +23,7 @@ jobs:
           run: |
             git config --global user.name 'Github Action'
             git config --global user.email 'josuebrunel@users.noreply.github.com'
-            git add -A
+            git add . # stage new files and modifications
             git commit -m "Update documentation"
             git push origin master
 
