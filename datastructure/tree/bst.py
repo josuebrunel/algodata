@@ -6,13 +6,14 @@ class Node(object):
         self.right = right
 
     def __repr__(self):
-        return f"{self.value} ({self.left}, {self.right})"
+        return f"{self.value} [{self.left}, {self.right}]"
 
     def insert(self, val):
         if not val:
             return False
         if not self.value:
             self.value = val
+            return True
         if val <= self.value:
             if self.left:
                 return self.left.insert(val)

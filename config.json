@@ -1,0 +1,12 @@
+{
+  "repo": "https://github.com/josuebrunel/algodata/blob/master/",
+  "languages": {
+    ".py": "python",
+    ".go": "golang"
+  },
+  "template": "rdm.tpl",
+  "scopes": [
+    "^(algorithms|datastructure|templates).*\/$",
+    "^(algorithms|datastructure|templates).*(.py|.go)$"
+  ]
+}
