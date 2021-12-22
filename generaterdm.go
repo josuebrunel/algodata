@@ -120,7 +120,10 @@ func (rg ReadmeGenerator) Generate(root string) error {
 			os.Remove(rdmpath)
 			return err
 		}
-		fd.WriteString("\n\n")
+		if _, err := fd.WriteString("\n\n"); err != nil {
+			log.Printf("Failed to add sections newlines : err %s", err)
+			continue
+		}
 	}
 	return nil
 }
