@@ -71,6 +71,7 @@ func (rg ReadmeGenerator) Generate(root string) error {
 	}
 	var fpath string
 	var snippets []CodeSnippet
+	var headers []string
 
 	for _, file := range files {
 		fpath = filepath.Join(root, file.Name())
@@ -90,8 +91,11 @@ func (rg ReadmeGenerator) Generate(root string) error {
 				log.Printf("Failed to read file %s : err %v", fpath, err)
 				continue
 			}
+			fname := file.Name()
+			anchor := fmt.Sprintf("#-%s%s-", fname[:len(fname)-len(ext)], ext[1:])
+			headers = append(headers, fmt.Sprintf("[%s](%s)\n", fname, anchor))
 			snippet := CodeSnippet{
-				file.Name(),
+				fname,
 				rg.cf.Languages[ext],
 				string(content),
 			}
@@ -108,6 +112,13 @@ func (rg ReadmeGenerator) Generate(root string) error {
 		return err
 	}
 	defer fd.Close()
+	// build readme headers
+	for _, header := range headers {
+		_, err := fd.WriteString(header)
+		if err != nil {
+			log.Printf("Failed write header to readme")
+		}
+	}
 	for _, snippet := range snippets {
 		tpl, err := template.ParseFiles(rg.cf.Template)
 		if err != nil {
