@@ -1,3 +1,5 @@
+[stack.py](#-stackpy-)
+[stack_test.go](#-stack_testgo-)
 #### [ stack.py ]( stack.py )
 
 ```python

@@ -1,3 +1,6 @@
+[isanagram.py](#-isanagrampy-)
+[ispanlindrom.py](#-ispanlindrompy-)
+[longestpalindromicsubstring.py](#-longestpalindromicsubstringpy-)
 #### [ isanagram.py ]( isanagram.py )
 
 ```python

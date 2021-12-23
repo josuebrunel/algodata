@@ -1,3 +1,4 @@
+[kadane.py](#-kadanepy-)
 #### [ kadane.py ]( kadane.py )
 
 ```python

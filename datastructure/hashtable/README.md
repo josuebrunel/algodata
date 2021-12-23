@@ -1,3 +1,5 @@
+[hashtable.py](#-hashtablepy-)
+[hashtable_test.go](#-hashtable_testgo-)
 #### [ hashtable.py ]( hashtable.py )
 
 ```python

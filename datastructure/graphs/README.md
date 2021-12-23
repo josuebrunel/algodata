@@ -1,3 +1,6 @@
+[graphs.py](#-graphspy-)
+[numberofislands.py](#-numberofislandspy-)
+[riverssizes.py](#-riverssizespy-)
 #### [ graphs.py ]( graphs.py )
 
 ```python
