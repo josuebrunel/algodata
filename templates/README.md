@@ -57,10 +57,10 @@ def get_node_neighbors(grid, i, j):
         x = i + pos[0]
         y = j + pos[1]
         # checking row boundaries
-        if not (0 <= x < len(grid[i])):
+        if not (0 <= x < len(grid)):
             continue
         # checking columns boundaries
-        if not (0 <= y < len(grid)):
+        if not (0 <= y < len(grid[i])):
             continue
         neighbors.append(grid[x][y])
     return neighbors
