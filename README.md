@@ -11,6 +11,36 @@ The Sliding Window pattern is used to perform a required operation on a specific
 * The problem input is a linear data structure such as a linked list, array, or string
 * You’re asked to find the longest/shortest substring, subarray, or a desired value
 
+```python
+
+    from collections import Counter
+
+    def length_longest_substring(s):
+        if not s:
+            return 0
+        length = len(s)
+        ans = 0
+        for i in range(length):
+            cword = set()
+            j = i
+            while j < length and s[j] not in set():
+                cword.add(s[j])
+                j += 1
+            ans = max(ans, j-i)
+        return ans
+
+    def find_all_anagrams(s):
+        def is_anagram(a, b):
+            return Counter(a) == Counter(b)
+        ans = []
+        i, j = 0, len(j)
+        while i+l <= len(s):
+            if is_anagram(s[i:i+j]):
+                ans.append(i)
+            i += 1
+        return res
+```
+
 ### 2. Two pointers (iterator)
 
 Two Pointers is a pattern where two pointers iterate through the data structure in tandem until one or both of the pointers hit a certain condition.Two Pointers is often useful when searching pairs in a sorted array or linked list; for example, when you have to compare each element of an array to its other elements.
@@ -20,6 +50,31 @@ Ways to identify when to use the Two Pointer method:
 * It will feature problems where you deal with sorted arrays (or Linked Lists) and need to find a set of elements that fulfill certain constraints
 * The set of elements in the array is a pair, a triplet, or even a subarray
 
+```python
+
+    def three_sum(nums, target):
+        nums.sort()
+        res = []
+
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            # 2 pointers l and r
+            l, r = i+1, len(nums) - 1
+            while l < r:
+                csum = nums[i] + nums[l] + nums[r]
+                if csum > 0:
+                    r -= 1
+                elif csum < 0:
+                    l += 1
+                else:
+                    res.append([nums[i], nums[l], nums[r]])
+                    l += 1
+                    while nums[l] < nums[l-1] and l < r:
+                        l += 1
+        return res
+```
+
 ### 3. Fast and slow pointers
 
 The Fast and Slow pointer approach, also known as the Hare & Tortoise algorithm, is a pointer algorithm that uses two pointers which move through the array (or sequence/linked list) at different speeds. This approach is quite useful when dealing with cyclic linked lists or arrays.
@@ -28,6 +83,43 @@ By moving at different speeds (say, in a cyclic linked list), the algorithm prov
 How do you identify when to use the Fast and Slow pattern?
 * The problem will deal with a loop in a linked list or array
 * When you need to know the position of a certain element or the overall length of the linked list.
+
+```python
+
+    def has_cycle(head):
+        if not head or not head.next:
+            return False
+        slow, fast = head, head
+        while fast and fast.next :
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+
+    # O(n) time | O(1) space
+    def is_palindromic(head):
+        slow = fast = head
+        # finding the middle
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        # reversing half of the linked list
+        middle = None
+        while slow:
+            next_node = slow.next
+            slow.next = middle
+            midle = slow
+            slow = next_node
+        # comparing both half of the linked list
+        print(middle, fast)
+        while middle:
+            if middle.val != fast.val:
+                return False
+            middle = middle.next
+            fast = fast.next
+        return True
+```
 
 ### 4. Merge Intervals
 
