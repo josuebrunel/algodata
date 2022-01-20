@@ -162,6 +162,23 @@ How do I identify when to use this pattern:
             prev = node
             node = next_node
         return prev
+
+    def reverse_sub_linked_list(head, left, right):
+        dummy = ListNode(0, head)
+        left_prev, cur = dummy, head
+        for _ in range(left-1):
+            left_prev, cur = cur, cur.next
+
+        prev = None
+        for _ in range(right - left + 1):
+            next_node = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_node
+
+        left_prev.next.next = cur
+        left_prev.next = prev
+        return dummy.next
 ```
 
 ### 7. Tree BFS (Breadth First Search)
