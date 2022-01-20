@@ -136,6 +136,24 @@ How do you identify when to use the Merge Intervals pattern?
 * If you’re asked to produce a list with only mutually exclusive intervals
 * If you hear the term “overlapping intervals”.
 
+```python
+
+    def interval_intersections(l1, l2):
+        res = []
+        i = j = 0
+
+        while i < len(firstList) and j < len(secondList):
+            start = max(firstList[i][0], secondList[j][0])
+            end = min(firstList[i][1], secondList[j][1])
+            if start <= end:
+                res.append([start, end])
+            if firstList[i][1] == end:
+                i += 1
+            else:
+                j += 1
+        return res
+```
+
 ### 5. Cyclic sort
 
 This pattern describes an interesting approach to deal with problems involving arrays containing numbers in a given range. The Cyclic Sort pattern iterates over the array one number at a time, and if the current number you are iterating is not at the correct index, you swap it with the number at its correct index.
