@@ -138,16 +138,16 @@ How do you identify when to use the Merge Intervals pattern?
 
 ```python
 
-    def interval_intersections(l1, l2):
+    def interval_list_intersections(l1, l2):
         res = []
         i = j = 0
 
-        while i < len(firstList) and j < len(secondList):
-            start = max(firstList[i][0], secondList[j][0])
-            end = min(firstList[i][1], secondList[j][1])
+        while i < len(l1) and j < len(l2):
+            start = max(l1[i][0], l2[j][0])
+            end = min(l1[i][1], l2[j][1])
             if start <= end:
                 res.append([start, end])
-            if firstList[i][1] == end:
+            if l1[i][1] == end:
                 i += 1
             else:
                 j += 1
