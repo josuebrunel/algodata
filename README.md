@@ -353,7 +353,10 @@ How to identify the K-way Merge pattern:
 * If the problem asks you to merge sorted lists, find the smallest element in a sorted list.
 
 ```python
-    # there are better though
+    # there is better solution than the one below
+    # that solution consists on merging the set of
+    # linked list by group of 2. Repeat that process
+    # until there's one linked list left
     def merge_k_sorted_list(lists):
         merged = []
         min_heap = []
