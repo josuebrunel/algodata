@@ -119,6 +119,37 @@ How do you identify when to use the Fast and Slow pattern?
             middle = middle.next
             fast = fast.next
         return True
+
+    # O(n) time | O(1) space
+    def reorder_list(head):
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # break linked list
+        half = slow.next
+        slow.next = None
+        # reverse second half
+        prev = None
+        while half:
+            next_node = half.next
+            half.next = prev
+            prev = half
+            half = next_node
+        # reorder the linked list
+        fhead, shead = head, prev
+        while fhead and shead:
+            # save the next of the 2 heads
+            fnext = fhead.next
+            snext = shead.next
+            # fix next values of both heads
+            fhead.next = shead
+            shead.next = fnext
+            # advance
+            fhead = fnext
+            shead = snext
+        return head
 ```
 
 ### 4. Merge Intervals
