@@ -210,6 +210,21 @@ How do I identify this pattern?
             else:
                 i += 1
         return array
+
+    def find_missing_number(nums):
+        i, length = 0, len(nums)
+        # sort the array
+        while i < length:
+            j = nums[i]
+            if nums[i] < length and nums[i] != nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
+            else:
+                i += 1
+        # search for value different from its own index
+        for i in range(length):
+            if i != nums[i]:
+                return i
+        return length
 ```
 
 ### 6. In-place reversal linked list
