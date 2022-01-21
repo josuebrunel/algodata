@@ -225,6 +225,47 @@ How do I identify this pattern?
             if i != nums[i]:
                 return i
         return length
+
+    def find_duplicate_number(nums):
+        i, length = 0, len(nums)
+        while i < length:
+            j = nums[i] - 1
+            if nums[i] != nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
+            else:
+                i += 1
+        # search for the misplaced number
+        for i in range(length):
+            if nums[i] != i+1:
+                return nums[i]
+        return -1
+
+    def set_mismatch(nums):
+        i, length = 0, len(nums)
+        while i < length:
+            j = nums[i] - 1
+            if nums[i] == nums[j]:
+                i += 1
+            else:
+                nums[i], nums[j] = nums[j], nums[i]
+
+        for i in range(length):
+            if nums[i] != i+1:
+                return [nums[i], i+1]
+        return [-1, -1]
+
+    def first_missing_positive(nums):
+        i, length = 0, len(nums)
+        while i < length:
+            j = nums[i] - 1
+            if (0 <= j < length) and nums[i] != nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
+            else:
+                i += 1
+        for i in range(length):
+            if nums[i] != i+1:
+                return i+1
+        return length + 1
 ```
 
 ### 6. In-place reversal linked list
