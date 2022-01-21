@@ -193,6 +193,25 @@ How do I identify this pattern?
 * They will be problems involving a sorted array with numbers in a given range
 * If the problem asks you to find the missing/duplicate/smallest number in an sorted/rotated array
 
+```python
+
+    def cyclic_sort(array):
+        """The goal is to put every element in the array
+        at its right position according to the relation
+        correct_index = array[index] - 1.
+        For each element (i) that doesn't meet this relation
+        swap with the element at the "correct" index (j = array[i]-1)
+        """
+        i = 0
+        while i < len(array):
+            j = array[i] - 1 # correct index
+            if array[i] != array[j]:
+                array[i], array[j] = array[j], array[i] # swap
+            else:
+                i += 1
+        return array
+```
+
 ### 6. In-place reversal linked list
 
 In a lot of problems, you may be asked to reverse the links between a set of nodes of a linked list. Often, the constraint is that you need to do this in-place, i.e., using the existing node objects and without using extra memory. This is where the above mentioned pattern is useful.
