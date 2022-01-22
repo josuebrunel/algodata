@@ -73,6 +73,22 @@ Ways to identify when to use the Two Pointer method:
                     while nums[l] < nums[l-1] and l < r:
                         l += 1
         return res
+
+    def reverse_only_letters(s):
+        s = list(s)
+        i, j = 0, len(s) - 1
+        while i < j:
+            if not s[i].isalpha():
+                i += 1
+                continue
+            if not s[j].isalpha():
+                j -= 1
+                continue
+
+            s[i], s[j] = s[j], s[i]
+            i += 1
+            j -= 1
+        return "".join(s)
 ```
 
 ### 3. Fast and slow pointers
