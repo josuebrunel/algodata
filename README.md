@@ -329,6 +329,49 @@ The Tree BFS pattern works by pushing the root node to the queue and then contin
 How to identify the Tree BFS pattern:
 * If you’re asked to traverse a tree in a level-by-level fashion (or level order traversal)
 
+```python
+
+    from collections import deque
+
+    def level_order_traversal(root):
+        res = []
+        queue = deque()
+        queue.append(root)
+        while queue:
+            level = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if not node:
+                    continue
+                level.append(node)
+                queue.append(node.left)
+                queue.append(node.right)
+            if level:
+                res.append(level)
+        return res
+
+    def zigzag_order_traversal(root):
+        res = []
+        queue = deque()
+        queue.append(root)
+        while queue:
+            level = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if not node:
+                    continue
+                level.append(value)
+                queue.append(node.left)
+                queue.append(node.right)
+            if not level:
+                continue
+            if switch:
+                level.reverse()
+            res.append(level)
+            switch = not switch
+        return res
+```
+
 ### 8. Tree DFS (Depth First Search)
 
 Tree DFS is based on the Depth First Search (DFS) technique to traverse a tree.
