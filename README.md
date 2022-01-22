@@ -440,6 +440,31 @@ The patterns looks like this for an ascending order set:
             else:
                 right = mid
         return -1
+
+    def find_min_in_rotated_array(nums):
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = left + (right - left) // 2
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            else:
+                right = mid
+        return nums[left]
+
+    def sqrt(x):
+        if not x:
+            return x
+        left , right = 0, x+1
+        while left < right:
+            mid = left + (right - left) // 2
+            val = mid*mid
+            if val == x:
+                return mid
+            elif val < x:
+                left = mid+1
+            else:
+                right = mid
+        return left-1
 ```
 
 ### 12. Top K elements
