@@ -403,20 +403,48 @@ How to identify the Subsets pattern:
 * Problems where you need to find the combinations or permutations of a given set
 
 ```python
-    def problem(subset):
+    # backtracking template
+    def backtrack(Path, Seletion List, Result  ):
+        if meet the End Conditon:
+            Result.add(Path)
+            return
+
+        for seletion in Seletion List:
+            select
+            backtrack(Path, Seletion List)
+            deselect
+
+    # O(4^n) time where 4 is the max number of letter for 1 digit
+    # O(n) space where n is the length of digits
+    def letter_combination_phone_number(digits):
+        if not digits:
+            return []
+        keypad = {
+            "1": "",
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
         res = []
-        backtrack(subset, 0, step, res)
+
+        # backtrack function
+        def backtrack(comb, pos):
+            if len(comb) == len(digits):
+                res.append("".join(comb.copy()))
+            for i in keypad[digits[pos]]:
+                comb.append(i)
+                backtrack(comb, pos+1)
+                comb.pop()
+
+        # initial call
+        backtrack([], 0)
         return res
-
-    def backtrack(subset, start, step, res):
-        if condition == ok:
-            res.append(step.copy())
-
-        for set in subset:
-            step.append(set)
-            backtrack(subset, start + 1)
-            step.pop()
-```
+    ```
 
 ### 11. Modified binary search
 
