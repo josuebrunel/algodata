@@ -465,7 +465,7 @@ How to identify the Subsets pattern:
         # initial call
         backtrack(0, [])
         return res
-    ```
+```
 
 ### 11. Modified binary search
 
