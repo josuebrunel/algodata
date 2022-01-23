@@ -444,6 +444,26 @@ How to identify the Subsets pattern:
         # initial call
         backtrack([], 0)
         return res
+
+    def combination_sum(elements, target):
+        res = []
+
+        def backtrack(pos, comb):
+            if sum(comb) > target:
+                return
+            if pos > len(elements):
+                return
+            if sum(comb) == target:
+                res.append(comb.copy())
+
+            comb.append(elements[pos])
+            backtrack(pos, comb)
+            comb.pop()
+            backtrack(pos+1, comb)
+
+        # initial call
+        backtrack(0, [])
+        return res
     ```
 
 ### 11. Modified binary search
