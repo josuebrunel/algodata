@@ -354,6 +354,7 @@ How to identify the Tree BFS pattern:
         res = []
         queue = deque()
         queue.append(root)
+        switch = False
         while queue:
             level = []
             for _ in range(len(queue)):
