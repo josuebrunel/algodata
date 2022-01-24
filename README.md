@@ -415,6 +415,31 @@ How to identify the Subsets pattern:
             backtrack(Path, Seletion List)
             deselect
 
+    # O(n*n^2) time because we have 2 choices at every level: include the current value or not
+    # O(2^n) space
+    def subsets_ii(nums):
+        res = []
+        # sort nums to have duplicates in row
+        def backtrack(subset, pos):
+            if pos == len(nums):
+                res.append(subset.copy())
+                return
+
+            # all subset with nums[pos]
+            subset.append(nums[pos])
+            backtrack(subset, pos + 1)
+            subset.pop()
+            # all without subset with nums[pos]
+            backtrack(subset, pos + 1)
+            # we remove duplicate
+            while pos+1 < len(nums) and nums[pos] == nums[pos+1]:
+                pos += 1
+            backtrack(subset, pos + 1)
+
+        backtrack([], 0)
+        return res
+
+
     # O(4^n) time where 4 is the max number of letter for 1 digit
     # O(n) space where n is the length of digits
     def letter_combination_phone_number(digits):
