@@ -385,6 +385,53 @@ How to identify the Tree DFS pattern:
 * If you’re asked to traverse a tree with in-order, preorder, or postorder DFS
 * If the problem requires searching for something where the node is closer to a leaf
 
+
+```python
+
+    # O(n) time because we have to through all path
+    # O(h) space where h is the height of the tree
+    # O(n) in worst case
+    # O(log(n)) for a balanced tree
+    def has_path_sum(root, target):
+        if not root:
+            return False
+
+        def dfs(node, current_sum):
+            if not node:
+                return False
+            current_sum += node.val
+            if node.left and not node.right:
+                return current_sum == target
+            return dfs(node.left, current_sum, target) or dfs(node.right, current_sum, target)
+
+    return dfs(root, 0, target)
+
+    def path_sum_2(node, target)
+        if not root:
+            return []
+        res = []
+
+        def dfs(node, csum, path):
+            if not node:
+                return False
+            csum += node.val
+            if not node.left and not node.right and csum == targetSum:
+                path.append(node.val)
+                res.append(path.copy())
+                path.pop()
+                return
+            path.append(node.val)
+            dfs(node.left, csum, path)
+            path.pop()
+            path.append(node.val)
+            dfs(node.right, csum, path)
+            path.pop()
+
+        dfs(root, 0, [])
+        return res
+
+```
+
 ### 9. Two Heaps
 
 In many problems, we are given a set of elements such that we can divide them into two parts. To solve the problem, we are interested in knowing the smallest element in one part and the biggest element in the other part. This pattern is an efficient approach to solve such problems.
