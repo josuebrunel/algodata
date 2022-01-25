@@ -484,6 +484,28 @@ How to identify the Subsets pattern:
         backtrack([], 0)
         return res
 
+    def unique_permutation(nums):
+        res = []
+        visited = set()
+
+        def backtrack(subset):
+            if len(subset) == len(nums):
+                res.append(subset.copy())
+                return
+
+            for i in nums:
+                if i in visited:
+                    continue
+
+                visited.add(i)
+                subset.append(i)
+                backtrack(subset)
+                subset.pop()
+                visited.remove(i)
+
+        backtrack([])
+        return res
+
 
     # O(4^n) time where 4 is the max number of letter for 1 digit
     # O(n) space where n is the length of digits
