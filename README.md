@@ -16,18 +16,16 @@ The Sliding Window pattern is used to perform a required operation on a specific
     from collections import Counter
 
     def length_longest_substring(s):
-        if not s:
-            return 0
-        length = len(s)
-        ans = 0
-        for i in range(length):
-            cword = set()
-            j = i
-            while j < length and s[j] not in set():
-                cword.add(s[j])
-                j += 1
-            ans = max(ans, j-i)
-        return ans
+        res = 0
+        chars = set()
+        l = 0
+        for r in range(len(s)):
+            while s[r] in chars:
+                chars.remove(s[l])
+                l += 1
+            chars.add(s[r])
+            res = max(res, r-l+1)
+        return res
 
     def find_all_anagrams(s):
         def is_anagram(a, b):
