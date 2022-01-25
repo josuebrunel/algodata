@@ -669,3 +669,42 @@ How to identify the Topological Sort pattern:
 * If you’re asked to update all objects in a sorted order
 * If you have a class of objects that follow a particular order
 
+```python
+
+    def course_schedule(num, prerequisites): # can finish
+        # we build an adjacent list to map each course
+        # to its prerequisites
+        pre_map = {i: [] for i in range(num)}
+        for crs, pre in prerequisites:
+            pre_map[crs].append(pre)
+
+        # we define a list to track the state of the vertex
+        # -1 visiting
+        # 0 not visited
+        # 1 visited
+        visit = [0 for _ in range(num)]
+
+        def dfs(crs):
+            # if course is in visiting state
+            # we have a cycle
+            if visit[crs] == -1:
+                return False
+            # if course already visited
+            # no need to go further
+            if visit[crs] == 1:
+                return True
+            # set course in visiting state
+            visit[crs] = -1
+            for pre in pre_map[crs]:
+                if not dfs(pre):
+                    return False
+            # set course state to visited
+            # after exploring its adjacent nodes
+            visit[crs] = 1
+            return True
+
+        for i in range(num):
+            if not dfs(i):
+                return False
+        return True
+```
