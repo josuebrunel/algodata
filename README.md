@@ -448,6 +448,24 @@ How to identify the Tree DFS pattern:
 
         return dfs(root, 0)
 
+    def max_path_sum(root):
+        if not root:
+            return 0
+        res = [float("-inf")]
+
+        def dfs(node):
+            if not node:
+                return 0
+        left_path_sum = max(0, dfs(node.left))
+        right_path_sum = max(0, dfs(node.right))
+        # compute node sum with a split
+        # and update if greater than current max sum
+        res[0] = max(res[0], node.val + left_path_sum + right_path_sum)
+        # return max sum without a split
+        return node.val + max(left_path_sum, right_path_sum)
+
+    dfs(root)
+    return res[0]
 ```
 
 ### 9. Two Heaps
