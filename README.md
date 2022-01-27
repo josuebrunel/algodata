@@ -428,6 +428,26 @@ How to identify the Tree DFS pattern:
         dfs(root, 0, [])
         return res
 
+    def path_sum_3(node, target):
+        if not root:
+            return 0
+
+        prefix_sum = {0: 1}
+
+        def dfs(node, cur_sum):
+            if not node:
+                return 0
+            res = 0
+            cur_sum += node.val
+            if cur_sum - target in prefix_sum:
+                res += prefix_sum[cur_sum - target]
+            prefix_sum[cur_sum] = prefix_sum.get(cur_sum, 0) + 1
+            res = dfs(node.left, cur_sum) + dfs(node.right, cur_sum)
+            prefix_sum[cur_sum] -= 1
+            return res
+
+        return dfs(root, 0)
+
 ```
 
 ### 9. Two Heaps
