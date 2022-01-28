@@ -774,3 +774,40 @@ How to identify the Topological Sort pattern:
                 return False
         return True
 ```
+
+### 15. Union-Find (DSU - Disjoint Set Union)
+
+Union-Find Data structure can be used to check whether an undirected graph contains cycle or not
+So we can use DSU to check if 2 components ( nodes ) are connected to each other directly or
+indirectly or determine if tow components are disconnected.
+This data structure has 2 operations:
+* Union: connects 2 elements
+* Find: finds if there is a path between 2 elements
+
+```python
+
+    class DSU:
+        def __init__(self, array):
+            self.array = array
+
+        def root(self, n):
+            while i != self.array[i]:
+                # path compression
+                self.array[i] = self.array[self.array[i]]
+                i = self.array[i]
+            return i
+
+        def union(self, a, b):
+            root_a = self.root(a)
+            root_b = self.root(b)
+            self.array[root_a] = root_b
+
+        def find(self, a, b):
+            return self.root(a) == self.root(b)
+```
+
+### 16. Djikstra
+
+### 17. Prefix Sum
+
+### 18. Monotonic Stack
