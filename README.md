@@ -811,3 +811,67 @@ This data structure has 2 operations:
 ### 17. Prefix Sum
 
 ### 18. Monotonic Stack
+
+### 19. Subsequence
+
+Generally speaking, this kind of question would ask you to find a longest subsequence . Since the shortest subsequence, on the other hand, is just a character, which is not worth asking. Once it comes to subsequences or extreme value problems, it is almost certain that we need to use dynamic programming techniques, and the time complexity is generally O(n^2)
+The reason is quite simple. Just think about a string. How many possibilities are there for its subsequence? The answer is at least exponential, right? Thus, we have no reason not to use DP.
+There are 2 strategies to solve those kind of problems:
+
+1. Use a 1 dimensional DP array
+
+    This strategy can be used for instance in the **Longest Increasing Subsequence** problem.
+    We define a **dp[i]** as the length of the required subsequence within the subarray [0..i]
+    Why does the LIS problem require this strategy? The foregoing is clear enough -- because this strategy is in line with the induction method, and the state transition relation can be found.
+
+    ```python
+    def length_of_lis(nums):
+        cache = [0] * len(nums)
+
+        for i in range(len(nums)):
+            cur_max = 0
+            for j in range(i+1):
+                # since we are looking increasing subsequence
+                # we check if nums[j] < nums[i]
+                if nums[j] < nums[i]:
+                    # then we pick the max between the
+                    # current max and the j cached result
+                    cur_max = max(cur_max, cache[j])
+            # once j == i+1 we cache the result of nums[i]
+            cache[i] = cur_max + 1
+
+        return max(cache)
+    ```
+
+2. Use a 2d dimensional DP array
+
+    This strategy is used relatively more, especially for the subsequences problems involving two strings / arrays, such as the "Longest Common Subsequence". The definition of the DP array in this strategy is further divided into two cases: "Only one string is involved" and "Two strings are involved".
+
+    a. In the case where 2 strings are involved, the definition of the DP array is as follow:
+        We define **dp[i][j]** as the length of the required subsequence (longest common substring) within the subarray arr1[0..i] and the subarray arr2[0..j]
+
+    ```python
+
+    def length_of_lcs(text1, text2):
+        # we build a grid set at 0 where rows is len(text1)
+        # and columns len(text2)
+        dp = [[0 for _ in range(len(text2)+1)] for _ in range(len(text1)+1)]
+
+        for i in range(len(text1) - 1, -1, -1):
+            for j in range(len(text2) -1, -1, -1):
+                if text1[i] == text2[j]:
+                    # if match, we add 1 to the diagonal
+                    dp[i][j] = 1 + dp[i+1][j+1]
+                else:
+                    #if no match, we max between right and below
+                    dp[i][j] = max(dp[i][j+1], dp[i+1][j])
+        return dp[0][0]
+    ```
+
+    b. In the case where only 1 string is involved, the definition of the DP array is as follow:
+        We define **dp[i][j]** as the length of the required subsequence (the longest palindromic subsequence) with subarray **array[i..j]**
+        Why do we define a two-dimensional DP array like this? We mentioned many times before that finding state transition relation requires inductive thinking. To put it plainly, it is how we derive unknown parts from known results, which makes it easy to generalize and discover the state transition relation.
+        Specifically, if we want to find dp[i][j], suppose you have already got the result of the subproblem dp[i+1][j-1] (the length of the longest palindrome subsequence ins[i+1..j-1]), can you find a way to calculate the value ofdp[i][j](the length of the longest palindrome subsequence ins[i..j]) ?
+        The answer is yes! It depends on the characters of s[i] and s[j]
+        If they are equal, then the longest palindrome subsequence in s[i+1..j-1] would be these two characters plus the longest palindrome subsequence in s[i..j]
+        If they are not equal, it means that they cannot appear at the same time in the longest palindrome subsequence of s[i..j]. Therefore, we add them separately to s[i+1..j-1] to see which substring produces a longer palindrome subsequence
