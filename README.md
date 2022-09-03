@@ -812,6 +812,61 @@ This data structure has 2 operations:
 
 ### 18. Monotonic Stack
 
+Monotonic Stack is the best time complexity solution for many “range queries in an array” problems. Because every element in the array could only enter the monotonic stack once, the time complexity is O(N). (N represents the length of the array).
+Using monotonic stack to maintain a range can save lots of time. Because it only updates information within the range based on new adding elements and avoids repetitive operations of existing elements. To be more precisely, the monotonic stack helps us maintain maximum and and minimum elements in the range and keeps the order of elements in the range. Therefore, we don’t need to compare elements one by one again to get minima and maxima in the range. At mean while, because it keeps the elements’ order, we only need to update the stack based on newest adding element.
+
+A problem is suitable to use monotonic stack when it has at least the three characters below:
+
+1. It is a “range queries in an array” problem
+2. The minima/maxima element or the monotonic order of elements in a range is useful to get answer of every range query.
+3. When a element is popped from the monotonic stack, it will never be used again.
+
+
+Templates
+
+
+```python
+
+def increasing_mono_stack(nums):
+    stack = []
+
+    for i in range(len(nums)):
+        while stack and stack[-1] >= nums[i]:
+            stack.pop()
+        stack.append(nums[i])
+    return stack
+
+
+def decreasing_mono_stack(nums):
+    stack = []
+    for i in range(len(nums)):
+        while stack and stack[-1] <= nums[i]:
+            stack.pop()
+        stack.append(nums[i])
+    return stack
+
+def next_greater_element(nums1, nums2):
+
+    nums1idx = {n: i for i, n in enumerate(nums1)}
+    ans = [-1] * len(nums1)
+    stack = []
+
+    for i in range(len(nums2)):
+        cur = nums2[i]
+        while stack and stack[-1] < cur:
+            val = stack.pop()
+            idx = nums1idx[val]
+            ans[idx] = cur
+
+        if cur not in nums1idx:
+            continue
+        stack.append(cur)
+
+    return ans
+
+```
+
+
 ### 19. Subsequence
 
 Generally speaking, this kind of question would ask you to find a longest subsequence . Since the shortest subsequence, on the other hand, is just a character, which is not worth asking. Once it comes to subsequences or extreme value problems, it is almost certain that we need to use dynamic programming techniques, and the time complexity is generally O(n^2)
