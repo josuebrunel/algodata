@@ -1,6 +1,7 @@
 [binarysearch.py](#-binarysearchpy-)
 [graph_neighbors.py](#-graph_neighborspy-)
 [intervals_overlap.py](#-intervals_overlappy-)
+[monotonicstack.py](#-monotonicstackpy-)
 #### [ binarysearch.py ]( binarysearch.py )
 
 ```python
@@ -111,6 +112,49 @@ class IntervalsOverlapTest(unittest.TestCase):
         self.assertEqual(overlap([1, 4], [3, 5]), True)
         self.assertEqual(overlap([1, 2], [0, 4]), True)
         self.assertEqual(overlap([0, 2], [4, 5]), False)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+```
+
+
+
+#### [ monotonicstack.py ]( monotonicstack.py )
+
+```python
+
+import unittest
+
+
+def increasing_mono_stack(nums):
+    stack = []
+
+    for i in range(len(nums)):
+        while stack and stack[-1] >= nums[i]:
+            stack.pop()
+        stack.append(nums[i])
+    return stack
+
+
+def decreasing_mono_stack(nums):
+    stack = []
+    for i in range(len(nums)):
+        while stack and stack[-1] <= nums[i]:
+            stack.pop()
+        stack.append(nums[i])
+    return stack
+
+
+class MonoStackTest(unittest.TestCase):
+
+    def test_increasing_mono_stack(self):
+        self.assertEqual(increasing_mono_stack([5, 3, 1, 2, 4]), [1, 2, 4])
+
+    def test_decreasing_mono_stack(self):
+        self.assertEqual(decreasing_mono_stack([5, 3, 1, 2, 4]), [5, 4])
 
 
 if __name__ == "__main__":
