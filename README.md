@@ -13,38 +13,64 @@ The Sliding Window pattern is used to perform a required operation on a specific
 
 ```python
 
-    from collections import Counter
+def max_sum_subarray(array, k):
+    if not array of k > len(array):
+        return 0
+    max_sum = 0
+    for i in range(k): # defining max sum base line
+        max_sum += array[i]
+    cur_sum = max_sum
+    left, right = 0, k
 
-    def max_sum_subarray(array, k):
-        if not array of k > len(array):
-            return 0
-        max_sum = 0
-        for i in range(k): # defining max sum base line
-            max_sum += array[i]
-        cur_sum = max_sum
-        left, right = 0, k
-
-        while k < len(array):
-            # no need to recompute the slice
-            # if we want array[i:j] we just remove
-            # the starting value (i) then add the ending value (j)
-            cur_sum = cur_sum - array[left] + array[right]
-            max_sum = max(max_sum, cur_sun)
-            left += 1
-            right += 1
-        return max_sum
+    while k < len(array):
+        # no need to recompute the slice
+        # if we want array[i:j] we just remove
+        # the starting value (i) then add the ending value (j)
+        cur_sum = cur_sum - array[left] + array[right]
+        max_sum = max(max_sum, cur_sun)
+        left += 1
+        right += 1
+    return max_sum
 
 
-    def find_all_anagrams(s):
-        def is_anagram(a, b):
-            return Counter(a) == Counter(b)
-        ans = []
-        i, j = 0, len(j)
-        while i+l <= len(s):
-            if is_anagram(s[i:i+j]):
-                ans.append(i)
-            i += 1
+def find_all_anagrams(s):
+    if len(p) > len(s):
+            return []
+        L, res = 0, []
+        sCount, pCount = {}, {}
+        for i in range(len(p)):
+            sCount[s[i]] = sCount.get(s[i], 0) + 1
+            pCount[p[i]] = pCount.get(p[i], 0) + 1
+
+        res = [0] if sCount == pCount else []
+
+        for R in range(len(p), len(s)):
+            sCount[s[R]] = sCount.get(s[R], 0) + 1
+            sCount[s[L]] -= 1
+
+            if sCount[s[L]] == 0:
+                sCount.pop(s[L])
+
+            L += 1
+
+            if sCount == pCount:
+                res.append(L)
+
         return res
+
+
+def longest_substring_wo_repeating_character(s):
+    res = 0
+    chars = set()
+    l = 0
+    for r in range(len(s)):
+        while s[r] in chars:
+            chars.remove(s[l])
+            l += 1
+        chars.add(s[r])
+        res = max(res, r-l+1)
+
+    return res
 ```
 
 ### 2. Two pointers (iterator)
