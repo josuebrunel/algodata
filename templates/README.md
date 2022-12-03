@@ -1,6 +1,7 @@
 [binarysearch.py](#-binarysearchpy-)
-[graph_neighbors.py](#-graph_neighborspy-)
+[graph.py](#-graphpy-)
 [intervals_overlap.py](#-intervals_overlappy-)
+[linkedlist.py](#-linkedlistpy-)
 [monotonicstack.py](#-monotonicstackpy-)
 #### [ binarysearch.py ]( binarysearch.py )
 
@@ -42,11 +43,55 @@ if __name__ == "__main__":
 
 
 
-#### [ graph_neighbors.py ]( graph_neighbors.py )
+#### [ graph.py ]( graph.py )
 
 ```python
 
+import collections
 import unittest
+
+
+class Graph:
+
+    def __init__(self):
+        self.graph = collections.defaultdict(list)
+
+    def __repr__(self):
+        return str(self.graph)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+    def bfs(self, vertex):
+        q = collections.deque()
+        seen = set()
+        q.append(vertex)
+        res = []
+
+        while q:
+            cur = q.popleft()
+            seen.add(cur)
+            for adj in self.graph[cur]:
+                if adj in seen:
+                    continue
+                q.append(adj)
+            res.append(cur)
+
+        return res
+
+
+class GraphBFS(unittest.TestCase):
+
+    def test_graph_bfs(self):
+        g = Graph()
+        g.add_edge(0, 1)
+        g.add_edge(0, 2)
+        g.add_edge(1, 2)
+        g.add_edge(2, 0)
+        g.add_edge(2, 3)
+        g.add_edge(3, 3)
+        print(g)
+        self.assertEqual(g.bfs(2), [2, 0, 3, 1])
 
 
 def get_node_neighbors(grid, i, j):
@@ -71,6 +116,7 @@ def get_node_neighbors(grid, i, j):
 
 
 class TestGraphNodeNeighbors(unittest.TestCase):
+
     def test_get_graph_node_neighbors(self):
         grid = [
             [1, 2, 3],
@@ -116,6 +162,25 @@ class IntervalsOverlapTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+```
+
+
+
+#### [ linkedlist.py ]( linkedlist.py )
+
+```python
+
+def reverse(head):
+    prev, cur = None, head
+    while cur:
+        next_node = cur.next
+        cur.next = prev
+        prev = cur
+        cur = next_node
+    head = prev
+    return head
 
 
 ```
