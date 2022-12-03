@@ -93,7 +93,7 @@ func (rg ReadmeGenerator) Generate(root string) error {
 			}
 			fname := file.Name()
 			anchor := fmt.Sprintf("#-%s%s-", fname[:len(fname)-len(ext)], ext[1:])
-			headers = append(headers, fmt.Sprintf("[%s](%s)\n", fname, anchor))
+			headers = append(headers, fmt.Sprintf("* [%s](%s)\n", fname, anchor))
 			snippet := CodeSnippet{
 				fname,
 				rg.cf.Languages[ext],
