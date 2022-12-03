@@ -56,3 +56,16 @@ def balance_binary_tree(root):
         return balanced, 1 + max(left, right)
 
     return dfs(root)[0]
+
+
+def same_binary_tree(p, q):
+    """2 Binary tree are the same if every nodes
+    has the same value at the same position for
+    both trees
+    """
+    if not p and not q:
+        return True
+    if p and q and p.val == q.val:
+        return same_binary_tree(p.left, q.left) and same_binary_tree(
+            p.right, q.right)
+    return False
