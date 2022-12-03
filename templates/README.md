@@ -1,6 +1,6 @@
 [binarysearch.py](#-binarysearchpy-)
 [graph.py](#-graphpy-)
-[intervals_overlap.py](#-intervals_overlappy-)
+[intervals.py](#-intervalspy-)
 [linkedlist.py](#-linkedlistpy-)
 [monotonicstack.py](#-monotonicstackpy-)
 #### [ binarysearch.py ]( binarysearch.py )
@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
 
 
-#### [ intervals_overlap.py ]( intervals_overlap.py )
+#### [ intervals.py ]( intervals.py )
 
 ```python
 
