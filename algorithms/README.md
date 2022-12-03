@@ -1,8 +1,8 @@
-[binarysearch.py](#-binarysearchpy-)
-[dsu.py](#-dsupy-)
-[kadane.py](#-kadanepy-)
-[monotonicstack.py](#-monotonicstackpy-)
-[slidingwindow.py](#-slidingwindowpy-)
+* [binarysearch.py](#-binarysearchpy-)
+* [dsu.py](#-dsupy-)
+* [kadane.py](#-kadanepy-)
+* [monotonicstack.py](#-monotonicstackpy-)
+* [slidingwindow.py](#-slidingwindowpy-)
 #### [ binarysearch.py ]( binarysearch.py )
 
 ```python

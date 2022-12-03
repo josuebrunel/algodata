@@ -1,4 +1,4 @@
-[heap.py](#-heappy-)
+* [heap.py](#-heappy-)
 #### [ heap.py ]( heap.py )
 
 ```python

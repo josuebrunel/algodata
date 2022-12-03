@@ -1,7 +1,7 @@
-[bubble.py](#-bubblepy-)
-[cyclic.py](#-cyclicpy-)
-[insertion.py](#-insertionpy-)
-[selection.py](#-selectionpy-)
+* [bubble.py](#-bubblepy-)
+* [cyclic.py](#-cyclicpy-)
+* [insertion.py](#-insertionpy-)
+* [selection.py](#-selectionpy-)
 #### [ bubble.py ]( bubble.py )
 
 ```python

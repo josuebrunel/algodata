@@ -1,4 +1,4 @@
-[fibonacci.py](#-fibonaccipy-)
+* [fibonacci.py](#-fibonaccipy-)
 #### [ fibonacci.py ]( fibonacci.py )
 
 ```python

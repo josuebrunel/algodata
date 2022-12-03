@@ -1,5 +1,5 @@
-[linkedlist.py](#-linkedlistpy-)
-[linkedlist_test.go](#-linkedlist_testgo-)
+* [linkedlist.py](#-linkedlistpy-)
+* [linkedlist_test.go](#-linkedlist_testgo-)
 #### [ linkedlist.py ]( linkedlist.py )
 
 ```python

@@ -1,6 +1,6 @@
-[bst.py](#-bstpy-)
-[trie.py](#-triepy-)
-[trie_test.go](#-trie_testgo-)
+* [bst.py](#-bstpy-)
+* [trie.py](#-triepy-)
+* [trie_test.go](#-trie_testgo-)
 #### [ bst.py ]( bst.py )
 
 ```python

@@ -1,8 +1,8 @@
-[binarysearch.py](#-binarysearchpy-)
-[graph.py](#-graphpy-)
-[intervals.py](#-intervalspy-)
-[linkedlist.py](#-linkedlistpy-)
-[monotonicstack.py](#-monotonicstackpy-)
+* [binarysearch.py](#-binarysearchpy-)
+* [graph.py](#-graphpy-)
+* [intervals.py](#-intervalspy-)
+* [linkedlist.py](#-linkedlistpy-)
+* [monotonicstack.py](#-monotonicstackpy-)
 #### [ binarysearch.py ]( binarysearch.py )
 
 ```python
