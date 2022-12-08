@@ -66,38 +66,40 @@ import unittest
 
 
 class DSU:
-    def __init__(self, array):
-        self.array = array
 
-    def __repr__(self):
-        return f"{self.array}"
+    def __init__(self, N):
+        self.parents = {i: i for i in range(N)}
+        self.ranks = {i: 0 for i in range(N)}
 
-    def root(self, i):
-        print(f"Looking for root {i}")
-        while i != self.array[i]:
-            # path compression
-            self.array[i] = self.array[self.array[i]]
-            i = self.array[i]
-        print(f"Found root as {i}")
-        return i
+    def find(self, u):
+        u = self.parents[u]
+        while u != self.parents[u]:
+            self.parents[u] = self.parents[self.parents[u]]
+            u = self.parents[u]
+        return u
 
-    def union(self, a, b):
-        root_a = self.root(a)
-        root_b = self.root(b)
-        self.array[root_a] = root_b
-
-    def find(self, a, b):
-        return self.root(a) == self.root(b)
+    def union(self, u, v):
+        u, v = self.find(u), self.find(v)
+        if u == v:
+            return False
+        if self.ranks[u] > self.ranks[v]:
+            self.parents[v] = u
+        elif self.ranks[u] < self.ranks[v]:
+            self.parents[u] = v
+        else:
+            self.parents[u] = v
+            self.ranks[v] += 1
+        return True
 
 
 class DSUTest(unittest.TestCase):
+
     def test_dsu(self):
-        dsu = DSU([0, 1, 2, 3, 4, 5])
-        dsu.union(0, 1)
-        self.assertEqual((dsu.array[0], dsu.array[1]), (1, 1))
-        self.assertEqual(dsu.find(1, 5), False)
-        dsu.union(4, 5)
-        self.assertEqual(dsu.find(4, 5), True)
+        edges = [[1, 2], [4, 1], [2, 4], [2, 3]]
+        dsu = DSU(len(edges) + 1)
+        for u, v in edges:
+            dsu.union(u, v)
+        self.assertEqual(dsu.union(4, 1), False)
 
 
 if __name__ == "__main__":
