@@ -512,6 +512,67 @@ Ways to identify the Two Heaps pattern:
 * If the problem states that you need to find the smallest/largest/median elements of a set
 * Sometimes, useful in problems featuring a binary tree data structure
 
+```python
+
+import unittest
+import heapq
+
+
+class MedianFinder:
+
+    def __init__(self):
+        self.min = []
+        self.max = []
+
+    def addNumber(self, num):
+        heapq.heappush(self.min, -num)
+        if self.min and self.max and -self.min[0] > self.max[0]:
+            val = heapq.heappop(self.min)
+            heapq.heappush(self.max, -val)
+
+        if len(self.min) > len(self.max) + 1:
+            val = heapq.heappop(self.min)
+            heapq.heappush(self.max, -val)
+        if len(self.max) > len(self.min) + 1:
+            val = heapq.heappop(self.max)
+            heapq.heappush(self.min, -val)
+
+    def findMedian(self):
+        if len(self.min) > len(self.max):
+            return -self.min[0]
+        elif len(self.min) < len(self.max):
+            return self.max[0]
+        else:
+            return (-self.min[0] + self.max[0]) / 2
+
+
+class MedianFinderTest(unittest.TestCase):
+
+    def test_median_class(self):
+        m = MedianFinder()
+        m.addNumber(1)
+        m.addNumber(2)
+        self.assertEqual(m.findMedian(), 1.5)
+        m.addNumber(3)
+        self.assertEqual(m.findMedian(), 2)
+
+        m = MedianFinder()
+        m.addNumber(-1)
+        self.assertEqual(m.findMedian(), -1)
+        m.addNumber(-2)
+        self.assertEqual(m.findMedian(), -1.5)
+        m.addNumber(-3)
+        self.assertEqual(m.findMedian(), -2)
+        m.addNumber(-4)
+        self.assertEqual(m.findMedian(), -2.5)
+        m.addNumber(-5)
+        self.assertEqual(m.findMedian(), -3)
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
 ### 10. Subset
 
 A huge number of coding interview problems involve dealing with Permutations and Combinations of a given set of elements. The pattern Subsets describes an efficient Breadth First Search (BFS) approach to handle all these problems.
@@ -804,6 +865,7 @@ How to identify the Topological Sort pattern:
 ### 15. Union-Find (DSU - Disjoint Set Union)
 
 Union-Find Data structure can be used to check whether an undirected graph contains cycle or not
+or to count the number of components.
 So we can use DSU to check if 2 components ( nodes ) are connected to each other directly or
 indirectly or determine if tow components are disconnected.
 This data structure has 2 operations:
@@ -811,28 +873,103 @@ This data structure has 2 operations:
 * Find: finds if there is a path between 2 elements
 
 ```python
+import unittest
 
-    class DSU:
-        def __init__(self, array):
-            self.array = array
 
-        def root(self, n):
-            while i != self.array[i]:
-                # path compression
-                self.array[i] = self.array[self.array[i]]
-                i = self.array[i]
-            return i
+class DSU:
 
-        def union(self, a, b):
-            root_a = self.root(a)
-            root_b = self.root(b)
-            self.array[root_a] = root_b
+    def __init__(self, N):
+        self.parents = {i: i for i in range(N)}
+        self.ranks = {i: 0 for i in range(N)}
 
-        def find(self, a, b):
-            return self.root(a) == self.root(b)
+    def find(self, u):
+        u = self.parents[u]
+        while u != self.parents[u]:
+            self.parents[u] = self.parents[self.parents[u]]
+            u = self.parents[u]
+        return u
+
+    def union(self, u, v):
+        u, v = self.find(u), self.find(v)
+        if u == v:
+            return False
+        if self.ranks[u] > self.ranks[v]:
+            self.parents[v] = u
+        elif self.ranks[u] < self.ranks[v]:
+            self.parents[u] = v
+        else:
+            self.parents[u] = v
+            self.ranks[v] += 1
+        return True
+
+
+class DSUTest(unittest.TestCase):
+
+    def test_dsu(self):
+        edges = [[1, 2], [4, 1], [2, 4], [2, 3]]
+        dsu = DSU(len(edges) + 1)
+        for u, v in edges:
+            dsu.union(u, v)
+        self.assertEqual(dsu.union(4, 1), False)
+
+
+if __name__ == "__main__":
+    unittest.main()
 ```
 
 ### 16. Djikstra
+
+
+This algorithm is used to find the shortest path from a source to a destination.
+You can think of it as a greedy BFS.
+The idea is for each node to process **first** its neighbor with the minimum amount of weight.
+
+```python
+
+import unittest
+import collections
+import heapq
+
+# O(E * log(V)) or O(E * log(E))
+def djikstra(edges):
+    adj = collections.defaultdict(list)
+    for src, dst, wgh in edges:
+        adj[src].append((dst, wgh))
+        adj[dst] = adj.get(dst, [])
+
+    visited = set()
+    heap = []
+    heapq.heappush(heap, (0, 0))
+    shortest = [float("inf")] * len(adj)
+
+    while heap:
+        weight, edge = heapq.heappop(heap)
+        if edge in visited:
+            continue
+
+        visited.add(edge)
+        for ne, nw in adj[edge]:
+            if ne in visited:
+                continue
+            heapq.heappush(heap, (weight + nw, ne))
+
+        shortest[edge] = weight
+
+    return shortest
+
+
+class DjikstraTest(unittest.TestCase):
+
+    def test_djikstra(self):
+        edges = [[0, 1, 2], [0, 2, 6], [2, 3, 8], [1, 3, 5], [3, 4, 10],
+                 [3, 5, 15], [4, 5, 6], [4, 6, 2], [5, 6, 6]]
+        shortest = [0, 2, 6, 7, 17, 22, 19]
+        self.assertEqual(djikstra(edges), shortest)
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
 
 ### 17. Prefix Sum
 
