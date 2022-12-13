@@ -30,6 +30,30 @@ class Graph:
 
         return res
 
+    def shortest_path(self, start, end):
+        q = collections.deque()
+        q.append([start])
+        seen = set()
+
+        while q:
+            path = q.popleft()
+            v = path[-1]
+            if v == end:
+                return path
+
+            if v in seen:
+                continue
+
+            seen.add(v)
+            for n in self.graph[v]:
+                new_path = list(path)
+                new_path.append(n)
+                q.append(new_path)
+
+            path.append(v)
+
+        return -1
+
 
 class GraphBFS(unittest.TestCase):
 
@@ -44,39 +68,18 @@ class GraphBFS(unittest.TestCase):
         print(g)
         self.assertEqual(g.bfs(2), [2, 0, 3, 1])
 
-
-def get_node_neighbors(grid, i, j):
-    neighbors_positions = [
-        [0, -1],  # left
-        [0, 1],  # right
-        [-1, 0],  # up
-        [1, 0],  # down
-    ]
-    neighbors = []
-    for pos in neighbors_positions:
-        x = i + pos[0]
-        y = j + pos[1]
-        # checking row boundaries
-        if not (0 <= x < len(grid)):
-            continue
-        # checking columns boundaries
-        if not (0 <= y < len(grid[i])):
-            continue
-        neighbors.append(grid[x][y])
-    return neighbors
-
-
-class TestGraphNodeNeighbors(unittest.TestCase):
-
-    def test_get_graph_node_neighbors(self):
-        grid = [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9],
-        ]
-        self.assertEqual(get_node_neighbors(grid, 1, 1), [4, 6, 2, 8])
-        self.assertEqual(get_node_neighbors(grid, 0, 0), [2, 4])
-        self.assertEqual(get_node_neighbors(grid, 2, 2), [8, 6])
+    def test_shortest_path(self):
+        g = Graph()
+        g.graph = {
+            'A': ['B', 'E', 'C'],
+            'B': ['A', 'D', 'E'],
+            'C': ['A', 'F', 'G'],
+            'D': ['B', 'E'],
+            'E': ['A', 'B', 'D'],
+            'F': ['C'],
+            'G': ['C']
+        }
+        self.assertEqual(g.shortest_path("A", "D"), ["A", "B", "D"])
 
 
 if __name__ == "__main__":
