@@ -3,6 +3,7 @@
 * [djikstra.py](#-djikstrapy-)
 * [dsu.py](#-dsupy-)
 * [dsu_test.go](#-dsu_testgo-)
+* [floydwarshall.py](#-floydwarshallpy-)
 #### [ bellmanford.py ]( bellmanford.py )
 
 ```python
@@ -86,14 +87,6 @@ type EG struct {
 
 type E []EG
 
-func deepCopy(m map[string]int) map[string]int {
-	var mcopy = make(map[string]int)
-	for k, v := range m {
-		mcopy[k] = v
-	}
-	return mcopy
-}
-
 func bellmanFord(N int, src string, edges E) map[string]int {
 	dist := map[string]int{}
 	for _, e := range edges {
@@ -103,7 +96,7 @@ func bellmanFord(N int, src string, edges E) map[string]int {
 	dist[src] = 0
 
 	for i := 0; i < N; i++ {
-		distCopy := deepCopy(dist)
+		distCopy := dist
 		for _, e := range edges {
 			if dist[e.u] == math.MaxInt32 {
 				continue
@@ -300,6 +293,48 @@ func TestDSU(t *testing.T) {
 		t.Fatalf("False was expected for Union(4, 1)")
 	}
 }
+
+
+```
+
+
+
+#### [ floydwarshall.py ]( floydwarshall.py )
+
+```python
+
+import unittest
+
+
+def floyd_warshall(n, edges):
+    distances = [[float("inf")] * n for i in range(n)]
+    for i in range(n):
+        distances[i][i] = 0
+
+    for u, v, w in edges:
+        distances[u - 1][v - 1] = w
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                distances[i][j] = min(distances[i][j],
+                                      distances[i][k] + distances[k][j])
+    return distances
+
+
+class FloydWarshall(unittest.TestCase):
+
+    def test_floyd_warshall(self):
+        edges = [[1, 3, -2], [3, 4, 2], [4, 2, -1], [2, 3, 3], [2, 1, 4]]
+        result = [[0, -1, -2, 0], [4, 0, 2, 4], [5, 1, 0, 2], [3, -1, 1, 0]]
+        self.assertCountEqual(floyd_warshall(4, edges), result)
+        edges = [[1, 2, 3], [2, 1, 8], [2, 3, 2], [3, 1, 5], [3, 4, 1],
+                 [4, 1, 2], [1, 4, 7]]
+        result = [[0, 3, 5, 6], [5, 0, 2, 3], [3, 6, 0, 1], [2, 5, 7, 0]]
+        self.assertCountEqual(floyd_warshall(4, edges), result)
+
+
+if __name__ == "__main__":
+    unittest.main()
 
 
 ```
