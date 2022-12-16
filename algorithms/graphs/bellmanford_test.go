@@ -18,14 +18,6 @@ type EG struct {
 
 type E []EG
 
-func deepCopy(m map[string]int) map[string]int {
-	var mcopy = make(map[string]int)
-	for k, v := range m {
-		mcopy[k] = v
-	}
-	return mcopy
-}
-
 func bellmanFord(N int, src string, edges E) map[string]int {
 	dist := map[string]int{}
 	for _, e := range edges {
@@ -35,7 +27,7 @@ func bellmanFord(N int, src string, edges E) map[string]int {
 	dist[src] = 0
 
 	for i := 0; i < N; i++ {
-		distCopy := deepCopy(dist)
+		distCopy := dist
 		for _, e := range edges {
 			if dist[e.u] == math.MaxInt32 {
 				continue
